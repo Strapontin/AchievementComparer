@@ -22,13 +22,13 @@ def get_achievements(link):
 
     player_achievements = []
 
-    for achievement in achievement_collection:
+    for a in achievement_collection:
 
         # If the player has unlocked the achievement, we add it in the list
-        if 'achieveUnlockTime' in str(achievement):
+        if 'achieveUnlockTime' in str(a):
             ach = Achievement()
-            ach.AchievementName = achievement.find(attrs={'class': 'ellipsis'}).string
-            ach.WholeDivHtml = str(achievement)
+            ach.AchievementName = a.find(attrs={'class': 'ellipsis'}).string
+            ach.WholeDivHtml = str(a)
 
             player_achievements.append(ach)
 
@@ -47,31 +47,6 @@ if __name__ == '__main__':
     link1 = "https://steamcommunity.com/profiles/76561198086634382/stats/976730/achievements?&l=en"
     link2 = "https://steamcommunity.com/profiles/76561198193278659/stats/976730/achievements?&l=en"
 
-    # link1Content = urllib.request.urlopen(link1).read()
-    # link2Content = urllib.request.urlopen(link2).read()
-    #
-    # # Get the content of the achievements of the 2 players
-    # personalAchieve1 = BeautifulSoup(link1Content, 'html.parser').find(id='personalAchieve')
-    # personalAchieve2 = BeautifulSoup(link2Content, 'html.parser').find(id='personalAchieve')
-    #
-    # # Get a list of all the achievements
-    # achievementCollection1 = personalAchieve1.find_all(attrs={'class': 'achieveRow'})
-    # achievementCollection2 = personalAchieve2.find_all(attrs={'class': 'achieveRow'})
-    #
-    # p1Achievements = []
-    # p2Achievements = []
-
-    # Achievements for player 1
-    # for achievement in achievementCollection1:
-    #
-    #     # If the player has unlocked the achievement, we add it in the list
-    #     if 'achieveUnlockTime' in str(achievement):
-    #         ach = Achievement()
-    #         ach.AchievementName = achievement.find(attrs={'class': 'ellipsis'}).string
-    #         ach.WholeDivHtml = str(achievement)
-    #
-    #         p1Achievements.append(ach)
-
     # Get all the achievements for both players
     achievementsP1 = get_achievements(link1)
     achievementsP2 = get_achievements(link2)
@@ -80,16 +55,15 @@ if __name__ == '__main__':
 
     # For each achievement player 1 has, we search if player 2 has it also
     for achievement in achievementsP1Temp:
-        if any(achievement.AchievementName in a.AchievementName for a in achievementsP2):
+        if any(achievement.AchievementName == a.AchievementName for a in achievementsP2):
             achievementsP1.remove(achievement)
 
             # Get and remove the achievement in player 2
             indexP2 = list(filter(lambda x: x.AchievementName == achievement.AchievementName, achievementsP2))
-            achievementsP2.remove(indexP2[0])
 
-    print(len(achievementsP1))
-    print(len(achievementsP2))
+            if len(indexP2):
+                achievementsP2.remove(indexP2[0])
 
-# print(achievementCollection1[1])
+    print([a.AchievementName for a in achievementsP1])
+    print([a.AchievementName for a in achievementsP2])
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
