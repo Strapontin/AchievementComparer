@@ -60,9 +60,7 @@ if __name__ == '__main__':
 
             # Get and remove the achievement in player 2
             indexP2 = list(filter(lambda x: x.AchievementName == achievement.AchievementName, achievementsP2))
-
-            if len(indexP2):
-                achievementsP2.remove(indexP2[0])
+            achievementsP2.remove(indexP2[0])
 
     print([a.AchievementName for a in achievementsP1])
     print([a.AchievementName for a in achievementsP2])
