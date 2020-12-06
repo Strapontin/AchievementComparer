@@ -1,0 +1,30 @@
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/playerstats_generic.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/globalv2.css' %}">
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>home</title>
+    </head>
+    <style>
+    </style>
+    <body>
+        <div class="container">
+            <div class="achievementsP1">
+                <h1>Succès de Strapontin</h1>
+                {% for i in achievements_p1 %}
+                    {{ i | safe }}
+                {% endfor %}
+            </div>
+            <div class="achievementsP2">
+                <h1>Succès de SevenUp</h1>
+                {% for i in achievements_p2 %}
+                    {{ i | safe }}
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

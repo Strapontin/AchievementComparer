@@ -35,33 +35,34 @@ def get_achievements(link):
     return player_achievements
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def show_achievements():
 
     link1 = "https://steamcommunity.com/profiles/76561198086634382/stats/976730/achievements?&l=en"
     link2 = "https://steamcommunity.com/profiles/76561198193278659/stats/976730/achievements?&l=en"
 
     # Get all the achievements for both players
-    achievementsP1 = get_achievements(link1)
-    achievementsP2 = get_achievements(link2)
+    achievements_p1 = get_achievements(link1)
+    achievements_p2 = get_achievements(link2)
 
-    achievementsP1Temp = achievementsP1.copy()
+    achievements_p1_temp = achievements_p1.copy()
 
     # For each achievement player 1 has, we search if player 2 has it also
-    for achievement in achievementsP1Temp:
-        if any(achievement.AchievementName == a.AchievementName for a in achievementsP2):
-            achievementsP1.remove(achievement)
+    for achievement in achievements_p1_temp:
+        if any(achievement.AchievementName == a.AchievementName for a in achievements_p2):
+            achievements_p1.remove(achievement)
 
             # Get and remove the achievement in player 2
-            indexP2 = list(filter(lambda x: x.AchievementName == achievement.AchievementName, achievementsP2))
-            achievementsP2.remove(indexP2[0])
+            index_p2 = list(filter(lambda x: x.AchievementName == achievement.AchievementName, achievements_p2))
+            achievements_p2.remove(index_p2[0])
 
-    print([a.AchievementName for a in achievementsP1])
-    print([a.AchievementName for a in achievementsP2])
+    x = []
+    y = []
 
+    for a in achievements_p1:
+        x.append(a.WholeDivHtml)
+
+    for a in achievements_p2:
+        y.append(a.WholeDivHtml)
+
+    return {"achievements_p1": x, "achievements_p2": y}
