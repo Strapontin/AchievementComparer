@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath AchievementComparer/AchievementComparer AchievementComparer.wsgi --log-file -
+web: gunicorn --pythonpath AchievementComparer/AchievementComparer wsgi --log-file -
