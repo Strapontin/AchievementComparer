@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 import django_heroku
 
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'WebSite'
+    'WebSite',
+    'gunicorn'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 django_heroku.settings(locals())
+sys.path.insert(1, os.path.dirname(os.path.realpath(__file__)))
