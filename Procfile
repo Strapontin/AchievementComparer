@@ -1,1 +1,1 @@
-web: cd .. && gunicorn AchievementComparer.wsgi --log-file -
+web: gunicorn wsgi --log-file -
