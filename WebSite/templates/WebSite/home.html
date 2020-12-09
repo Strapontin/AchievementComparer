@@ -26,5 +26,10 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="globalAchievements">
+            {% for i in global_achievements %}
+                {{ i | safe }}
+            {% endfor %}
+        </div>
     </body>
 </html>
