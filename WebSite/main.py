@@ -10,6 +10,21 @@ class Achievement:
     WholeDivHtml = ""
 
 
+def get_header_to_link(html):
+    for title in html.find_all('h3'):
+
+        # Add a link to search on how to do the achievement
+        link = BeautifulSoup().new_tag("a", href=f'http://www.google.com/search?q=halo+{title.string}')
+
+        # Open in new tab on click
+        link["target"] = "_blank"
+
+        link.string = f'{title.string}'
+        title.string.replace_with(link)
+
+    return str(html)
+
+
 # Get the player achievements from the player's achievement's URL
 def get_achievements(link):
     link_content = urllib.request.urlopen(link).read()
@@ -28,7 +43,7 @@ def get_achievements(link):
         if 'achieveUnlockTime' in str(a):
             ach = Achievement()
             ach.AchievementName = a.find(attrs={'class': 'ellipsis'}).string
-            ach.WholeDivHtml = str(a)
+            ach.WholeDivHtml = get_header_to_link(a)
 
             player_achievements.append(ach)
 
@@ -49,7 +64,7 @@ def get_global_achievements():
     for a in achievement_collection:
         ach = Achievement()
         ach.AchievementName = a.find(attrs={'class': 'achieveTxt'}).h3.string
-        ach.WholeDivHtml = str(a)
+        ach.WholeDivHtml = get_header_to_link(a)
 
         all_achievements.append(ach)
 
@@ -89,9 +104,6 @@ def show_achievements():
         # Find the index of the achievement
         index = list(filter(lambda x: x.AchievementName == achievement.AchievementName, global_achievements))
         global_achievements.remove(index[0])
-
-    print("nb achievements")
-    print(len(global_achievements))
 
     x = []
     y = []

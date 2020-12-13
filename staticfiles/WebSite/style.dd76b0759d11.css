@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+}
+
+.achievementsP1,
+.achievementsP2 {
+    flex: 1;
+}
+
+.achievementsP1 h1,
+.achievementsP2 h1 {
+    text-align: center;
+}
+
+.achieveTxt {
+    width: 100%;
+}
+
+.globalAchievements {
+    width: 926px;
+    margin: auto;
+}
+
+screen and (max-width: 926px) {
+    .globalAchievements {
+        width: auto;
+    }
+}

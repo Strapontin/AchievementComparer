@@ -239,7 +239,10 @@
 	min-height: 64px;
 	position:relative;
 	background: rgba( 0, 0, 0, 0.5 );
+}
 
+.achievementsP1 .achieveTxtHolder,
+.achievementsP2 .achieveTxtHolder {
 	display: flex;
 	align-items: center;
 }
