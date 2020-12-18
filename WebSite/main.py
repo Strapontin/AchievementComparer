@@ -1,6 +1,7 @@
-# This is a sample Python script.
+# venv\Scripts\activate
 import urllib.request
 from bs4 import BeautifulSoup
+import threading
 
 
 # Press Maj+F10 to execute it or replace it with your code.
@@ -12,7 +13,6 @@ class Achievement:
 
 def get_header_to_link(html):
     for title in html.find_all('h3'):
-
         # Add a link to search on how to do the achievement
         link = BeautifulSoup().new_tag("a", href=f'http://www.google.com/search?q=halo+{title.string}')
 
@@ -26,62 +26,79 @@ def get_header_to_link(html):
 
 
 # Get the player achievements from the player's achievement's URL
-def get_achievements(link):
-    link_content = urllib.request.urlopen(link).read()
+class get_achievements(threading.Thread):
+    def __init__(self, link):
+        super(get_achievements, self).__init__()
+        self.link = link
+        self.player_achievements = []
 
-    # Get the content of the achievements of the 2 players
-    personal_achieve = BeautifulSoup(link_content, 'html.parser').find(id='personalAchieve')
+    def run(self):
+        link_content = urllib.request.urlopen(self.link).read()
 
-    # Get a list of all the achievements
-    achievement_collection = personal_achieve.find_all(attrs={'class': 'achieveRow'})
+        # Get the content of the achievements of the 2 players
+        personal_achieve = BeautifulSoup(link_content, 'html.parser').find(id='personalAchieve')
 
-    player_achievements = []
+        # Get a list of all the achievements
+        achievement_collection = personal_achieve.find_all(attrs={'class': 'achieveRow'})
 
-    for a in achievement_collection:
+        for a in achievement_collection:
 
-        # If the player has unlocked the achievement, we add it in the list
-        if 'achieveUnlockTime' in str(a):
-            ach = Achievement()
-            ach.AchievementName = a.find(attrs={'class': 'ellipsis'}).string
-            ach.WholeDivHtml = get_header_to_link(a)
+            # If the player has unlocked the achievement, we add it in the list
+            if 'achieveUnlockTime' in str(a):
+                ach = Achievement()
+                ach.AchievementName = a.find(attrs={'class': 'ellipsis'}).string
+                ach.WholeDivHtml = get_header_to_link(a)
 
-            player_achievements.append(ach)
-
-    return player_achievements
+                self.player_achievements.append(ach)
 
 
 # Gets the global Gameplay Stats for the game
-def get_global_achievements():
-    link = "https://steamcommunity.com/stats/976730/achievements/"
-    link_content = urllib.request.urlopen(link).read()
+class get_global_achievements(threading.Thread):
+    def __init__(self):
+        super(get_global_achievements, self).__init__()
+        self.all_achievements = []
 
-    # Gets the achievements
-    personal_achieve = BeautifulSoup(link_content, 'html.parser').find(id='mainContents')
-    achievement_collection = personal_achieve.find_all(attrs={'class': 'achieveRow'})
+    def run(self):
+        link = "https://steamcommunity.com/stats/976730/achievements/"
+        link_content = urllib.request.urlopen(link).read()
 
-    all_achievements = []
+        # Gets the achievements
+        personal_achieve = BeautifulSoup(link_content, 'html.parser').find(id='mainContents')
+        achievement_collection = personal_achieve.find_all(attrs={'class': 'achieveRow'})
 
-    for a in achievement_collection:
-        ach = Achievement()
-        ach.AchievementName = a.find(attrs={'class': 'achieveTxt'}).h3.string
-        ach.WholeDivHtml = get_header_to_link(a)
+        for a in achievement_collection:
+            ach = Achievement()
+            ach.AchievementName = a.find(attrs={'class': 'achieveTxt'}).h3.string
+            ach.WholeDivHtml = get_header_to_link(a)
 
-        all_achievements.append(ach)
-
-    return all_achievements
+            self.all_achievements.append(ach)
 
 
 # Press the green button in the gutter to run the script.
 def show_achievements():
-
     link1 = "https://steamcommunity.com/profiles/76561198086634382/stats/976730/achievements?&l=en"
     link2 = "https://steamcommunity.com/profiles/76561198193278659/stats/976730/achievements?&l=en"
 
-    global_achievements = get_global_achievements()
-
     # Get all the achievements for both players
-    achievements_p1 = get_achievements(link1)
-    achievements_p2 = get_achievements(link2)
+    global_achievements_thread = get_global_achievements()
+    achievements_p1_thread = get_achievements(link1)
+    achievements_p2_thread = get_achievements(link2)
+
+    # Start the threads
+    global_achievements_thread.start()
+    achievements_p1_thread.start()
+    achievements_p2_thread.start()
+
+    # Wait for all the threads to finish
+    global_achievements_thread.join()
+    achievements_p1_thread.join()
+    achievements_p2_thread.join()
+
+    # Get the data from the threads results
+    global_achievements = global_achievements_thread.all_achievements
+
+    achievements_p1 = achievements_p1_thread.player_achievements
+    achievements_p2 = achievements_p2_thread.player_achievements
 
     achievements_p1_temp = achievements_p1.copy()
 
@@ -100,7 +117,6 @@ def show_achievements():
 
     # Now we get all the achievements both players don't have
     for achievement in achievements_p1_temp:
-
         # Find the index of the achievement
         index = list(filter(lambda x: x.AchievementName == achievement.AchievementName, global_achievements))
         global_achievements.remove(index[0])
