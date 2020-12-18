@@ -73,11 +73,14 @@ class get_global_achievements(threading.Thread):
 
             self.all_achievements.append(ach)
 
+import datetime
 
 # Press the green button in the gutter to run the script.
 def show_achievements():
     link1 = "https://steamcommunity.com/profiles/76561198086634382/stats/976730/achievements?&l=en"
     link2 = "https://steamcommunity.com/profiles/76561198193278659/stats/976730/achievements?&l=en"
+
+    date_start = datetime.datetime.now()
 
     # Get all the achievements for both players
     global_achievements_thread = get_global_achievements()
@@ -101,6 +104,8 @@ def show_achievements():
     achievements_p2 = achievements_p2_thread.player_achievements
 
     achievements_p1_temp = achievements_p1.copy()
+
+    date_end_thread = datetime.datetime.now()
 
     # For each achievement player 1 has, we search if player 2 has it also
     for achievement in achievements_p1_temp:
@@ -133,5 +138,10 @@ def show_achievements():
 
     for a in global_achievements:
         z.append(a.WholeDivHtml)
+
+    date_end = datetime.datetime.now()
+
+    print(date_end_thread - date_start)
+    print(date_end - date_start)
 
     return {"achievements_p1": x, "achievements_p2": y, "global_achievements": z}
