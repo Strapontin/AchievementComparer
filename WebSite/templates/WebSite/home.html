@@ -13,7 +13,7 @@
     <style>
     </style>
     <body>
-        <div class="container">
+        <div class="container" id="top">
             <div class="achievementsP1">
                 <h1>Succès de Strapontin</h1>
                 {% for i in achievements_p1 %}
@@ -27,10 +27,15 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="globalAchievements">
+        <div id="globalAchievements">
+            <h1>Succès restants pour les deux joueurs</h1>
             {% for i in global_achievements %}
                 {{ i | safe }}
             {% endfor %}
         </div>
+
+        <!--Floating buttons to go back to top or to the global achievements-->
+        <a href="#top" class="floatTop">🡑</a>
+        <a href="#globalAchievements" class="floatBottom">🡓</a>
     </body>
 </html>

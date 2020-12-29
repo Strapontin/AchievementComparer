@@ -5,10 +5,12 @@
 .achievementsP1,
 .achievementsP2 {
     flex: 1;
+    padding: 8px;
 }
 
 .achievementsP1 h1,
-.achievementsP2 h1 {
+.achievementsP2 h1,
+#globalAchievements h1 {
     text-align: center;
 }
 
@@ -16,13 +18,35 @@
     width: 100%;
 }
 
-.globalAchievements {
+#globalAchievements {
     width: 926px;
     margin: auto;
 }
 
+.floatTop,
+.floatBottom {
+    position: fixed;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	right: 40px;
+	height: 40px;
+	width: 40px;
+	font-size: 26px;
+}
+
+.floatTop{
+    top: 40px;
+}
+
+.floatBottom {
+    top: 100px;
+}
+
 @media screen and (max-width: 926px) {
-    .globalAchievements {
+    #globalAchievements {
         width: auto;
     }
 }
