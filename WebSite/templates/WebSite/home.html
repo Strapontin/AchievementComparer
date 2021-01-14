@@ -15,20 +15,20 @@
     <body>
         <div class="container" id="top">
             <div class="achievementsP1">
-                <h1>Succès de Strapontin</h1>
+                <h1>Succès de Strapontin ({{ achievements_p1|length }})</h1>
                 {% for i in achievements_p1 %}
                     {{ i | safe }}
                 {% endfor %}
             </div>
             <div class="achievementsP2">
-                <h1>Succès de SevenUp</h1>
+                <h1>Succès de SevenUp ({{ achievements_p2|length }})</h1>
                 {% for i in achievements_p2 %}
                     {{ i | safe }}
                 {% endfor %}
             </div>
         </div>
         <div id="globalAchievements">
-            <h1>Succès restants pour les deux joueurs</h1>
+            <h1>Succès restants pour les deux joueurs ({{ global_achievements|length }})</h1>
             {% for i in global_achievements %}
                 {{ i | safe }}
             {% endfor %}
