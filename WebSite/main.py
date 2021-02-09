@@ -14,7 +14,7 @@ class Achievement:
 def get_header_to_link(html):
     for title in html.find_all('h3'):
         # Add a link to search on how to do the achievement
-        link = BeautifulSoup().new_tag("a", href=f'http://www.google.com/search?q=halo+{title.string}')
+        link = BeautifulSoup().new_tag("a", href=f'http://www.google.com/search?q=halo+{title.string}+achievement')
 
         # Open in new tab on click
         link["target"] = "_blank"
@@ -54,12 +54,14 @@ class get_achievements(threading.Thread):
 
 # Gets the global Gameplay Stats for the game
 class get_global_achievements(threading.Thread):
-    def __init__(self):
+    def __init__(self, game_id):
         super(get_global_achievements, self).__init__()
+        self.game_id = game_id
         self.all_achievements = []
 
     def run(self):
-        link = "https://steamcommunity.com/stats/976730/achievements/"
+        link = f"https://steamcommunity.com/stats/{self.game_id}/achievements/"
+        # link = "https://steamcommunity.com/stats/976730/achievements/"
         link_content = urllib.request.urlopen(link).read()
 
         # Gets the achievements
@@ -73,17 +75,19 @@ class get_global_achievements(threading.Thread):
 
             self.all_achievements.append(ach)
 
+
 import datetime
 
+
 # Press the green button in the gutter to run the script.
-def show_achievements():
-    link1 = "https://steamcommunity.com/profiles/76561198086634382/stats/976730/achievements?&l=en"
-    link2 = "https://steamcommunity.com/profiles/76561198193278659/stats/976730/achievements?&l=en"
+def show_achievements(game_id, player1, player2):
+    link1 = f"https://steamcommunity.com/profiles/{player1}/stats/{game_id}/achievements?&l=en"
+    link2 = f"https://steamcommunity.com/profiles/{player2}/stats/{game_id}/achievements?&l=en"
 
     date_start = datetime.datetime.now()
 
     # Get all the achievements for both players
-    global_achievements_thread = get_global_achievements()
+    global_achievements_thread = get_global_achievements(game_id)
     achievements_p1_thread = get_achievements(link1)
     achievements_p2_thread = get_achievements(link2)
 
