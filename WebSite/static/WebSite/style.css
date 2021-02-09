@@ -1,3 +1,21 @@
+/* 
+body {
+    display: flex;
+    flex-direction: column;
+} */
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    z-index: 100;
+}
+
+.content {
+    padding-top: 36px;
+}
+
 .container {
     display: flex;
 }
