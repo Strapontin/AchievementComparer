@@ -1,0 +1,54 @@
+
+.content {
+    display: flex;
+}
+
+input {
+    width: 100%;
+}
+
+.sectionGameContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionGameFinder {
+    width: 80%;
+    flex: 1;
+    margin: auto;
+    margin-top: 24px;
+}
+
+.gameList {
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+}
+
+.sectionPlayersContainer {
+    flex: 2;
+    display: flex;
+    background-color: darkcyan;
+}
+
+.sectionPlayer1{
+    background-color: darkred;
+}
+
+.sectionPlayer1,
+.sectionPlayer2 {
+    flex: 1;
+    display: flex;
+}
+
+.sectionGameId,
+.sectionPlayerId {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    margin-top: 24px;
+    font-size: 18px;
+}

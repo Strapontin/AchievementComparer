@@ -1,0 +1,57 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/playerstats_generic.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/globalv2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/edit.css' %}">
+
+<script type="text/javascript" src="{% static 'WebSite/js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'WebSite/js/edit.js' %}"></script>
+
+<script>
+    var find_games = '{% url "find_games" %}'
+</script>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Halo Achievements</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="edit"><u>Changer le jeu à comparer ou les joueurs</u></a>
+    </div>
+    <div class="content">
+
+        <div class="sectionGameContainer">
+            <div class="sectionGameId">
+                <p>Game :</p>
+                <input id="game" type="text" value="{{ game_id }}">
+            </div>
+            <div class="sectionGameFinder"></div>
+        </div>
+
+        <div class="sectionPlayersContainer">
+
+            <div class="sectionPlayer1">
+                <div class="sectionPlayerId">
+                    <p>Player 1 :</p>
+                    <input type="text" value="{{ player1 }}">
+                </div>
+                <div class="sectionPlayerFinder"></div>
+            </div>
+
+            <div class="sectionPlayer2">
+                <div class="sectionPlayerId">
+                    <p>Player 2 :</p>
+                    <input type="text" value="{{ player2 }}">
+                </div>
+                <div class="sectionPlayerFinder"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

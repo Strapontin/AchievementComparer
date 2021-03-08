@@ -1,0 +1,14 @@
+
+{% if games %}
+
+    <div class="gameList">
+        {% for game in games %}
+            <div class="gameName">
+                {{ game.fields.name }} - {{ game.fields.appId }}
+            </div>
+        {% endfor %}
+    </div>
+
+{% else %}
+    <p>No game found</p>
+{% endif %}

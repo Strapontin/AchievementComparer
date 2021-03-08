@@ -1,9 +1,9 @@
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'WebSite/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'WebSite/playerstats_generic.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'WebSite/globalv2.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'WebSite/game_achievements.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/playerstats_generic.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/globalv2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'WebSite/css/game_achievements.css' %}">
 
 <!DOCTYPE html>
 <html>
@@ -14,9 +14,9 @@
     </style>
     <body>
         <div class="header">
-            toto
+            <a href="edit"><u>Changer le jeu à comparer ou les joueurs</u></a>
         </div>
-            <div class="content">
+        <div class="content">
             <div class="container" id="top">
                 <div class="achievementsP1">
                     <h1>Succès de Strapontin ({{ achievements_p1|length }})</h1>
